@@ -28,7 +28,7 @@ When diagrammed, it looks like [this](https://q.uiver.app/#q=WzAsNCxbMSwxLCJjIl0
 
 This is the universal constructor for a product, but the gist of it is that it corresponds to the following ideas:
 - Cartesian Product in Set Theory
-- Conjunction (`AND`) in logic
+- Logical conjunction (`∧` - `AND`)
 - Objects in Object Oriented Programming
 - Objects in JSON and JavaScript
 - Records in other programming languages
@@ -86,21 +86,56 @@ Which when diagrammed, looks like [this](https://q.uiver.app/#q=WzAsNCxbMSwxLCJj
 
 ![Coproduct Universal Constructor](screenshots/coproduct-universal-constructor.png)
 
+The core concept behind the coproduct is that it represents the concept of _choice_. Like the product, it corresponds to several ideas:
+- Disjoint Union in Set Theory
+- Logical Disjunction (`∨` - `OR`)
+- Sum types
+- Enum types
+- Tagged unions in `C`
+    - Tagged unions can be implemented in any programming language, but are more common in languages lacking support for algebraic data types. What's interesting to note that they are technically a product type of an enum and a block of memory, with the block of memory interpreted according to the enum.
+
+
 
 #### How This Applies to Game Design
 Going back to _Slay the Spire_, each component from the above is actually a coproduct:
 - The [energy cost](https://q.uiver.app/#q=WzAsNixbMiwxLCJFbmVyZ3lcXCBDb3N0Il0sWzAsMCwiMCJdLFsxLDAsIjEiXSxbMiwwLCIuLi4iXSxbNCwwLCJYIl0sWzMsMCwi4oieIl0sWzEsMF0sWzIsMF0sWzMsMF0sWzQsMF1d) can (hypothetically) take the value of any non-negative integer OR `X`
-- Every effect in the list of effects can be one of either damage, draw, end turn, exhaust, poison, block, etc.
-- The definition of the list of effects itself is a recursive coproduct, being defined as `List effect = Cons effect List effect | Nil
-- The color is one of red, green, blue, purple, or colorless
+- Every [effect](https://q.uiver.app/#q=WzAsMTcsWzMsNSwiRWZmZWN0Il0sWzIsMCwiRGFtYWdlIl0sWzQsMCwiRHJhd1xcIENhcmQiXSxbMSwxLCJFbmRcXCBUdXJuIl0sWzIsMSwiRXhoYXVzdCJdLFszLDEsIkV0aGVyZWFsIl0sWzAsMiwiQWRkXFwgQnVmZiJdLFsxLDIsIkFkZFxcIERlYnVmZiJdLFsyLDIsIkNoYW5uZWxcXCBPcmIiXSxbMywyLCJFdm9rZVxcIE9yYiJdLFszLDAsIkJsb2NrIl0sWzQsMiwiQ2hhbmdlXFwgU3RhbmNlIl0sWzUsMiwiRXhpdFxcIFN0YW5jZSJdLFs0LDEsIkFkZFxcIEVuZXJneSJdLFs1LDEsIkFkZFxcIFBvd2VyIl0sWzYsMiwiQ3JlYXRlXFwgQ2FyZHMiXSxbMywzLCIuLi4iXSxbNiwwXSxbNywwXSxbOCwwXSxbMTYsMF0sWzksMCwiIiwyLHsiY3VydmUiOi0xfV0sWzExLDBdLFsxMiwwXSxbMTUsMF0sWzMsMF0sWzQsMF0sWzUsMCwiIiwyLHsiY3VydmUiOjF9XSxbMTMsMF0sWzE0LDBdLFsxLDBdLFsxMCwwLCIiLDIseyJjdXJ2ZSI6LTJ9XSxbMiwwXV0=) in the list of effects can be one of either damage, draw, end turn, exhaust, poison, block, etc.
+- The definition of the list of effects itself is a [recursive coproduct (with a product)](https://q.uiver.app/#q=WzAsNSxbMSwwLCJMaXN0XFwgRWZmZWN0Il0sWzAsMSwiTmlsIl0sWzEsMSwiQ29uc1xcIEVmZmVjdFxcIMOXXFwgKExpc3RcXCBFZmZlY3QpIl0sWzAsMiwiRWZmZWN0Il0sWzIsMiwiTGlzdFxcIEVmZmVjdCJdLFsxLDBdLFsyLDNdLFsyLDRdLFsyLDBdLFs0LDAsIiIsMCx7ImN1cnZlIjoyLCJsZXZlbCI6Miwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==), being defined as `List effect = Cons effect List effect | Nil
+- The [target type](https://q.uiver.app/#q=WzAsNCxbMSwwLCJUYXJnZXRcXCBUeXBlIl0sWzAsMSwiUGxheWVyIl0sWzEsMSwiU2VsZWN0ZWRcXCBFbmVteSJdLFsyLDEsIkFsbFxcIEVuZW1pZXMiXSxbMSwwXSxbMiwwXSxbMywwXV0=) can be the player, a selected enemy, or all enemies
+- The [color](https://q.uiver.app/#q=WzAsNixbMiwwLCJDb2xvciJdLFswLDEsIlJlZCJdLFsxLDEsIkdyZWVuIl0sWzIsMSwiQmx1ZSJdLFszLDEsIlB1cnBsZSJdLFs0LDEsIkNvbG9ybGVzcyJdLFsxLDBdLFsyLDBdLFszLDBdLFs0LDBdLFs1LDBdXQ==) is one of red, green, blue, purple, or colorless
+    - Strictly speaking, it could technically be any possible color representable with RGB pixel values, but in the context of playable cards the color is limited to this subset
 - The image can technically be any possible permutation of colored pixels, but in practice it's a curated set of images
-- The text, like the list of effects, is actually a recursive coproduct of all possible characters
+- The text, like the list of effects, is actually a [recursive coproduct of all possible characters](https://q.uiver.app/#q=WzAsOCxbMywwLCJMaXN0XFwgQ2hhcmFjdGVyIl0sWzIsMSwiTmlsIl0sWzMsMSwiQ29uc1xcIENoYXJhY3RlclxcIMOXXFwgKExpc3RcXCBDaGFyYWN0ZXIpIl0sWzEsMiwiQ2hhcmFjdGVyIl0sWzQsMiwiTGlzdFxcIENoYXJhY3RlciJdLFswLDMsImEiXSxbMSwzLCJiIl0sWzIsMywiLi4uIl0sWzEsMF0sWzIsM10sWzIsNF0sWzIsMF0sWzQsMCwiIiwwLHsiY3VydmUiOjIsImxldmVsIjoyLCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzUsM10sWzYsM10sWzcsM11d)
     - This is no coincidence, many programming languages actually implement strings (text) as a list of characters
 
-If we combine these with the original card product category, the card category looks like this:
+If we combine these with the original card product category, the card category looks like [this](https://q.uiver.app/#q=WzAsMzgsWzcsMiwiQ2FyZFxcIExvZ2ljIl0sWzIsNCwiRW5lcmd5XFwgQ29zdCJdLFsxMCw0LCJUYXJnZXRcXCBUeXBlIl0sWzE1LDQsIkNvbG9yIl0sWzE4LDQsIkltYWdlIl0sWzIwLDQsIlRleHQiXSxbMTgsMiwiQ2FyZFxcIERpc3BsYXkiXSxbMTIsMCwiQ2FyZCJdLFs5LDUsIlBsYXllciJdLFsxMCw1LCJTZWxlY3RlZFxcIEVuZW15Il0sWzExLDUsIkFsbFxcIEVuZW1pZXMiXSxbMTMsNSwiUmVkIl0sWzE0LDUsIkdyZWVuIl0sWzE1LDUsIkJsdWUiXSxbMTYsNSwiUHVycGxlIl0sWzE3LDUsIkNvbG9ybGVzcyJdLFsyMCw1LCJMaXN0XFwgQ2hhcmFjdGVyIl0sWzIwLDYsIkNvbnNcXCBDaGFyYWN0ZXJcXCDDl1xcIChMaXN0XFwgQ2hhcmFjdGVyKSJdLFsxOSw2LCJOaWwiXSxbMjEsNywiTGlzdFxcIENoYXJhY3RlciJdLFsxOCw3LCJDaGFyYWN0ZXIiXSxbMTcsOCwiYSJdLFsxOCw4LCJiIl0sWzE5LDgsIi4uLiJdLFs3LDQsIkxpc3RcXCBFZmZlY3QiXSxbNyw1LCJDb25zXFwgRWZmZWN0XFwgw5dcXCAoTGlzdFxcIEVmZmVjdCkiXSxbOCw2LCJMaXN0XFwgRWZmZWN0Il0sWzYsNiwiRWZmZWN0Il0sWzYsNSwiTmlsIl0sWzQsNywiRGFtYWdlIl0sWzUsNywiQmxvY2siXSxbNiw3LCJEcmF3XFwgQ2FyZCJdLFs3LDcsIi4uLiJdLFswLDUsIjAiXSxbMSw1LCIxIl0sWzIsNSwiLi4uIl0sWzMsNSwi4oieIl0sWzQsNSwiWCJdLFswLDFdLFswLDJdLFs2LDNdLFs2LDRdLFs2LDVdLFs3LDBdLFs3LDZdLFs4LDJdLFs5LDJdLFsxMCwyXSxbMTEsM10sWzEyLDNdLFsxMywzXSxbMTQsM10sWzE1LDNdLFsxNiw1XSxbMTgsMTZdLFsxNywxNl0sWzE2LDE5LCIiLDIseyJjdXJ2ZSI6LTIsImxldmVsIjoyLCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzIxLDIwXSxbMjIsMjBdLFsyMywyMF0sWzIwLDE3XSxbMCwyNF0sWzI0LDI2LCIiLDAseyJjdXJ2ZSI6LTIsImxldmVsIjoyLCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzI4LDI0XSxbMjcsMjVdLFsyNiwyNV0sWzI1LDI0XSxbMjksMjddLFszMCwyN10sWzMxLDI3XSxbMzIsMjddLFszMywxXSxbMzQsMV0sWzM1LDFdLFszNiwxXSxbMzcsMV0sWzE5LDE3XV0=):
 
+![_Slay the Spire_ Card - Category](screenshots/card-truncated.png)
 
-On a higher level, this also applies to all possible cards you can use, for example there are
+Note that this doesn't include status or curse cards. Technically these would be very similar categories but with different possible values for the color and omitting the energy cost and target type.
+
+This isn't limited to just cards, several mechanics can be represented this way:
+- All possible cards for a given character
+- All possible relics
+- All possible potions
+- The deck
+- All possible bosses for a given level
+
+##### Aside
+It seems like a lot of work for just aspect of a game, and when you pull it all together it touches on some very low level components that seem obvious, so what's the point of it all?
+
+Categories are ultimately _tools for thought_, they are one method of reasoning about things. At some point _someone_ has to reason on this sort of level, which is typically the programmer because they are required to think on this level to translate it to a machine. By making this concrete up front, you gain the following benefits:
+- It forces you to clarify your own thought process, which can lead to:
+    - Detecting errors in your reasoning
+    - Finding missing pieces in your design
+    - Detecting circular reasoning in game mechanics
+        - **_NOTE:_** Feedback mechanisms are different, and some definitions, such as the example above, can in fact be recursive, so the presence of cycles may in fact be necessary or even a _good thing_. The way to differentiate between these is understanding what exactly the diagram represents.
+- You gain a clear method of communication between team members who may not have the same understanding as you do.
+    - Team members can contribute their own ideas graphically as well.
+- You gain visibility on all of the requirements that need to be made, which can aid project management and setting expectations.
+- You gain an understanding of the complexity of your system.
+    - For tabletop games, the rule of thumb is that [on average, people can only keep track of 7 things (plus or minus 2) in working memory](https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two). Having too many things for people to remember to do without [chunking](https://en.wikipedia.org/wiki/Chunking_(psychology)) properly will result in a worse experience for players.
+    - For video games, you aren't as constrained mechanically as with tabletop games, but you _are_ constrained by the hardware in how much can be stored in memory and how much can be processed per second. Here you generally want to maintain at least 60 FPS before performance will degrade to noticeable levels. If you start noticing performance issues, you can use the category diagrams in addition to typical debugging tools to help locate the problem.
 
 ### Functors
 ### Monoids
@@ -137,3 +172,4 @@ http://comonad.com/reader/2018/computational-quadrinitarianism-curious-correspon
 https://ncatlab.org/nlab/show/Chaitin%27s+incompleteness+theorem
 https://news.ycombinator.com/item?id=37847282
 https://www.physicsforums.com/insights/higher-category-theory-physics/
+https://abuseofnotation.github.io/category-theory-illustrated/10_functors/
